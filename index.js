@@ -1,15 +1,15 @@
 const request = require('request');
 const colors = require('colors');
 
-if(process.argv.length === 2){
+if (process.argv.length === 2) {
     console.log("You  didn't enter arguments. Please use this syntax:".yellow);
-    console.log("coucour <currency-code> <amout-of-money>".green);
+    console.log("coucour <currency-code> <amount-of-money>".green);
     console.log("For more information enter curcour -h".yellow);
     process.exit();
 }
 
 
-const validCodes = [
+const currencyCodes = [
     "THB",
     "USD",
     "AUD",
@@ -46,32 +46,29 @@ const validCodes = [
     "CNY",
     "XDR"
 ];
-
-if (process.argv[2] === "-h") { //help section
+//help section
+if (process.argv[2] === "-h") {
     console.log("This is instruction of CurCour program".yellow);
-    console.log(``);
     process.exit();
 }
 
 const code = process.argv[2].toUpperCase();
-let amount = process.argv[3];
+let amount = process.argv[3] || 1;
 
 //check is amount is number
 
-if(amount == undefined){
-    amount = 1; //set default value to calc
-}else if(/\D/gmi.test(amount)){
+if (/\D/gmi.test(amount)) {
     console.log(`${amount} is not a number. Enter integer.`.red);
     process.exit();
-}else{
+} else {
     amount = parseInt(amount);
 }
 
 //validation of currency code
-const isValid = validCodes.find(currency => currency === code) ? true : false;
-if (!isValid) {
+const isValidCurrencyCode = currencyCodes.find(currency => currency === code);
+if (!isValidCurrencyCode) {
     console.log(`Wrong currency. Here is list of correct currency:\n`.yellow);
-    console.log(validCodes)
+    console.log(currencyCodes)
     process.exit();
 }
 
@@ -79,10 +76,12 @@ const url = `http://api.nbp.pl/api/exchangerates/rates/a/${code}/?format=json`;
 
 request(url, { json: true }, (err, res, body) => {
     if (err) {
-        return console.log(`Error: \n${err}`);
+        console.log(`Error: \n${err}`.red);
+        process.exit();
     }
     if (res.statusCode !== 200) {
-        return console.log("Status code is diffrent then 200. Check URL adress.");
+        console.log("Status code is diffrent then 200. Check URL adress.".red);
+        process.exit();
     }
 
     const count = amount / body.rates[0].mid;
