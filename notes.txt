@@ -1,4 +1,0 @@
-jako argumenty podaję code waluty oraz kwotę w złotówkach
-wypluwa ile dostanę waluty za podaną kwotę
-
-sprawdz czy podana kwota jest liczbą
