@@ -4,10 +4,14 @@ const colors = require('colors');
 //help variables
 const arg = process.argv;
 
-if (arg.length <= 2) {
-    console.log("You  didn't enter arguments. Please use this syntax:".yellow);
+const logSyntax = ()=>{
     console.log("coucour <argument> <currency-code> <amount-of-money>".green);
     console.log("For more information enter curcour -h".yellow);
+}
+
+if (arg.length <= 2) {
+    console.log("You  didn't enter arguments. Please use this syntax:".yellow);
+    logSyntax();
     process.exit();
 }
 
@@ -32,10 +36,14 @@ else if (arg[2] === "-h") {
     console.log("Wrong argument. Enter cucour -h for help".red);
     process.exit();
 }
+if(arg.length <=3){
+    console.log("You need to enter currency".red);
+    logSyntax();
+    process.exit();
+}
 
 
 
-const code = arg[3].toUpperCase();
 let amount = arg[4] || 0;
 
 //check is amount is a number
@@ -86,6 +94,8 @@ const currencyCodes = [
     "CNY",
     "XDR"
 ];
+
+const code = arg[3].toUpperCase();
 const isValidCurrencyCode = currencyCodes.find(currency => currency === code);
 if (!isValidCurrencyCode) {
     console.log(`Wrong currency. Here is list of correct currency:\n`.yellow);
@@ -128,9 +138,6 @@ request(url, { json: true }, (err, res, body) => {
         if (amount > 0) message = message + `For ${amount} ${body.code} you will get ${Math.round(count * 100) / 100} PLN`.blue;
 
     } else if (arg[2] === '-g') {
-        console.log(amount, typeof amount);
-        if (amount = 100) console.log('dupa');
-
         const count = amount * body.rates[0].ask;
         message =
             `Ask price of ${body.currency} (${body.code}) is ${body.rates[0].ask} PLN\n`.green +
