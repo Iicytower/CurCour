@@ -30,7 +30,7 @@ else if (arg[2] === "-h") {
     console.log(`-a is ask price price.`);
     console.log(`-e is exchange rate.`);
     console.log(`-g when u want to get amount of currency.`);
-    //here write instruction
+    console.log(`-h for help`);
     process.exit();
 } else {
     console.log("Wrong argument. Enter cucour -h for help".red);
@@ -146,8 +146,8 @@ request(url, { json: true }, (err, res, body) => {
     } else if (arg[2] === '-e') {
 
         message = `Exchange rate of ${body.currency} (${body.code}) is:\n` +
-            `Buy: ${body.rates[0].bid}\n`.green +
-            `Sell: ${body.rates[0].ask}\n`.green +
+            `Buy(bid): ${body.rates[0].bid}\n`.green +
+            `Sell(ask): ${body.rates[0].ask}\n`.green +
             `Spread: ${Math.round((body.rates[0].ask - body.rates[0].bid) * 1000000) / 1000000}`.yellow;
     }
     console.log(message);
