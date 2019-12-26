@@ -4,7 +4,7 @@ const colors = require('colors');
 //help variables
 const arg = process.argv;
 
-const logSyntax = ()=>{
+const logSyntax = () => {
     console.log("coucour <argument> <currency-code> <amount-of-money>".green);
     console.log("For more information enter curcour -h".yellow);
 }
@@ -15,34 +15,48 @@ if (arg.length <= 2) {
     process.exit();
 }
 
-let table = '';
-if (arg[2] === "-m") table = 'a';
-else if (arg[2] === "-b" || arg[2] === "-a") table = 'c';
-else if (arg[2] === "-e") table = 'c';
-else if (arg[2] === "-g") table = 'c';
-else if (arg[2] === "-h") {
-    console.log("This is instruction of CurCour program".yellow);
-    console.log("Use this syntax: ");
-    console.log("coucour <argument> <currency-code> <amount-of-money>".green);
-    console.log(`Arguments:`);
-    console.log(`-m is middle price.`);
-    console.log(`-b is bid price price.`);
-    console.log(`-a is ask price price.`);
-    console.log(`-e is exchange rate.`);
-    console.log(`-g when u want to get amount of currency.`);
-    console.log(`-h for help`);
-    process.exit();
-} else {
-    console.log("Wrong argument. Enter cucour -h for help".red);
-    process.exit();
+let table = ''; // witch tablke of NBP api
+
+switch (arg[2]) {
+    case '-m':
+        table = 'a';
+        break;
+    case '-b':
+        table = 'c';
+        break;
+    case '-a':
+        table = 'c';
+        break;
+    case '-e':
+        table = 'c';
+        break;
+    case '-g':
+        table = 'c';
+        break;
+    case '-h':
+        console.log("This is instruction of CurCour program".yellow);
+        console.log("Use this syntax: ");
+        console.log("coucour <argument> <currency-code> <amount-of-money>".green);
+        console.log(`Arguments:`);
+        console.log(`-m is middle price.`);
+        console.log(`-b is bid price price.`);
+        console.log(`-a is ask price price.`);
+        console.log(`-e is exchange rate.`);
+        console.log(`-g when u want to get amount of currency.`);
+        console.log(`-h for help`);
+        process.exit();
+        break;
+    default:
+        console.log("Wrong argument. Enter cucour -h for help".red);
+        process.exit();
+        break;
 }
-if(arg.length <=3){
+
+if (arg.length <= 3) {
     console.log("You need to enter currency".red);
     logSyntax();
     process.exit();
 }
-
-
 
 let amount = arg[4] || 0;
 
@@ -99,7 +113,7 @@ const code = arg[3].toUpperCase();
 const isValidCurrencyCode = currencyCodes.find(currency => currency === code);
 if (!isValidCurrencyCode) {
     console.log(`Wrong currency. Here is list of correct currency:\n`.yellow);
-    console.log(currencyCodes)
+    console.log(currencyCodes);
     process.exit();
 }
 
