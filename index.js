@@ -36,7 +36,7 @@ switch (arg[2]) {
     case '-h':
         console.log("This is instruction of CurCour program".yellow);
         console.log("Use this syntax: ");
-        console.log("coucour <argument> <currency-code> <amount-of-money>".green);
+        console.log("coucour <argument> <currency-code> <amount-of-money>".red);
         console.log(`Arguments:`);
         console.log(`-m is middle price.`);
         console.log(`-b is bid price price.`);

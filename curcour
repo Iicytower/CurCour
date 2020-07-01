@@ -1,0 +1,3 @@
+#!/bin/bash
+
+node ~/.curcour/CurCour/index.js $1 $2 $3 $4
